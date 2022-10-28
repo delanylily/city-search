@@ -1,4 +1,4 @@
-export class cityInfo {
+export class countryInfo {
   name: any;
   capital: any;
   continent: any;

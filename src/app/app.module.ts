@@ -3,19 +3,19 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { CitySearchComponent } from './city-search/city-search.component';
-import { CitiesService } from './services/cities.service';
+import { CountrySearchComponent } from './country-search/country-search.component';
+import { CountriesService } from './services/countries.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CitySearchComponent
+    CountrySearchComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule
   ],
-  providers: [CitiesService],
+  providers: [CountriesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
