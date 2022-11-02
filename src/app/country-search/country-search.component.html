@@ -1,8 +1,15 @@
 <div class="container">
   <h3>Search a city</h3>
-  <input (keyup)="searchCountries($event)" class="search" placeholder="Search country" type="text">
-  <ng-container *ngIf="countryInfo !== undefined" >
-    <h5 >{{countryInfo.flag}} {{countryInfo.name}}</h5>
+  <input id="search-input" (keyup)="searchCountries()" class="search" placeholder="Search country" type="text">
+  <div>
+    <ul *ngFor="let country of countryList; let i = index;">
+      <li (click)="countrySelected(i)">{{country}}</li>
+    </ul>
+  </div>
+
+  <!-- <input (keyup)="searchCountries($event)" class="search" placeholder="Search country" type="text"> -->
+  <ng-container >
+    <h5 >{{countryInfo?.flag}} {{countryInfo?.name}}</h5>
     <table class="table">
       <thead class="thead-dark">
         <tr>
@@ -14,10 +21,10 @@
       </thead>
   <tbody>
     <tr>
-      <td>{{countryInfo.capital}}</td>
-         <td>{{countryInfo.continent}}</td>
-         <td>{{countryInfo.language}}</td>
-         <td>{{countryInfo.independent}}</td>
+      <td>{{countryInfo?.capital}}</td>
+         <td>{{countryInfo?.continent}}</td>
+         <td>{{countryInfo?.language}}</td>
+         <td>{{countryInfo?.independent}}</td>
     </tr>
   </tbody>
     </table>
