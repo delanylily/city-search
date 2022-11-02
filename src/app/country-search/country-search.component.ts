@@ -25,6 +25,20 @@ export class CountrySearchComponent {
     })
   }
 
-
+  searchCountries() {
+    this.input = document.getElementById('search-input');
+    const search$ = fromEvent(this.input, 'keyup')
+      .pipe(
+        map((search: any) => {
+          this.term = search.target.value;
+        }),
+        switchMap(() => this.countriesService.getCountryData(this.term)));
+    search$.subscribe(countries => {
+      this.countryList = []
+      countries.map((country: any) => {
+        this.countryList.push(country.name.common);
+      })
+    })
+  }
 
 }
