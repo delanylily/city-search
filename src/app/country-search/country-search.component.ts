@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { debounceTime, delay, distinctUntilChanged, filter, fromEvent, map, Observable, of, pluck, switchMap, tap } from 'rxjs';
+import { Component } from '@angular/core';
+import { fromEvent, map, switchMap } from 'rxjs';
 import { countryInfo } from '../models/country-info';
 import { CountriesService } from '../services/countries.service';
 
@@ -11,15 +11,14 @@ import { CountriesService } from '../services/countries.service';
 export class CountrySearchComponent {
   countryInfo: countryInfo;
   countryList: Array<any> = [];
-  searchKeyupObservable: Observable<any>;
-  input: any = '';
+  input: any;
   term: any;
   selectedCountry: string;
-  constructor(private countriesService: CountriesService) {
-  }
+  constructor(private countriesService: CountriesService) { }
 
   countrySelected(country: any) {
     this.selectedCountry = this.countryList[country];
+    this.countryList = [];
     this.countriesService.getCountryData(this.selectedCountry).subscribe(data => {
       this.countryInfo = new countryInfo(data[0]);
     })
@@ -40,5 +39,4 @@ export class CountrySearchComponent {
       })
     })
   }
-
 }

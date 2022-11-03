@@ -1,12 +1,14 @@
-<div class="container">
-  <h3>Search a city</h3>
-  <input id="search-input" (keyup)="searchCountries()" class="search" placeholder="Search country" type="text">
-  <div>
-    <ul *ngFor="let country of countryList; let i = index;">
-      <li (click)="countrySelected(i)">{{country}}</li>
-    </ul>
+<div class="wrap">
+  <div class="search-wrap">
+    <h3>Search a city</h3>
+    <input id="search-input" (keyup)="searchCountries()" class="search" placeholder="Search country" type="text">
+    <div>
+      <ul *ngFor="let country of countryList; let i = index;">
+        <li (click)="countrySelected(i)">{{country}}</li>
+      </ul>
+    </div>
   </div>
-  <ng-container>
+  <div class="details">
     <h5>{{countryInfo?.flag}} {{countryInfo?.name}}</h5>
     <table class="table">
       <thead class="thead-dark">
@@ -26,5 +28,5 @@
         </tr>
       </tbody>
     </table>
-  </ng-container>
+  </div>
 </div>
