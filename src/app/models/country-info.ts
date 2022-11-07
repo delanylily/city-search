@@ -5,6 +5,7 @@ export class countryInfo {
   flag: string;
   language: any;
   independent: boolean;
+
   constructor(value: any) {
     this.name = value.name.common;
     this.capital = value.capital;

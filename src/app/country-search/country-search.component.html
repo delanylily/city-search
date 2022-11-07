@@ -1,7 +1,7 @@
 <div class="wrap">
   <div class="search-wrap">
     <h3>Search a city</h3>
-    <input id="search-input" (keyup)="searchCountries()" class="search" placeholder="Search country" type="text">
+    <input (keyup)="searchCountries($event)" class="search" placeholder="Search country" type="text">
     <div>
       <ul *ngFor="let country of countryList; let i = index;">
         <li (click)="countrySelected(i)">{{country}}</li>

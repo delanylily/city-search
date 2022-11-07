@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { fromEvent, map, switchMap } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { map, Subject, Subscription, switchMap } from 'rxjs';
 import { countryInfo } from '../models/country-info';
 import { CountriesService } from '../services/countries.service';
 
@@ -8,13 +8,28 @@ import { CountriesService } from '../services/countries.service';
   templateUrl: './country-search.component.html',
   styleUrls: ['./country-search.component.less']
 })
-export class CountrySearchComponent {
+export class CountrySearchComponent implements OnInit, OnDestroy {
   countryInfo: countryInfo;
   countryList: Array<any> = [];
-  input: any;
   term: any;
   selectedCountry: string;
+  inputSubscription: Subscription;
+  inputChanged: Subject<string> = new Subject<string>();
+
   constructor(private countriesService: CountriesService) { }
+
+  ngOnInit(): void {
+    this.inputSubscription = this.inputChanged.pipe(
+      map((search: any) => {
+        this.term = search;
+      }),
+      switchMap(() => this.countriesService.getCountryData(this.term))
+    ).subscribe(countries => {
+      countries.map((country: any) => {
+        this.countryList.push(country.name.common)
+      })
+    });
+  }
 
   countrySelected(country: any) {
     this.selectedCountry = this.countryList[country];
@@ -24,19 +39,11 @@ export class CountrySearchComponent {
     })
   }
 
-  searchCountries() {
-    this.input = document.getElementById('search-input');
-    const search$ = fromEvent(this.input, 'keyup')
-      .pipe(
-        map((search: any) => {
-          this.term = search.target.value;
-        }),
-        switchMap(() => this.countriesService.getCountryData(this.term)));
-    search$.subscribe(countries => {
-      this.countryList = []
-      countries.map((country: any) => {
-        this.countryList.push(country.name.common);
-      })
-    })
+  searchCountries(event: any) {
+    this.inputChanged.next(event.target.value)
+  }
+
+  ngOnDestroy(): void {
+    this.inputSubscription.unsubscribe();
   }
 }
