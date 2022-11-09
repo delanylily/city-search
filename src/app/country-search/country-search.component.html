@@ -1,11 +1,17 @@
 <div class="wrap">
   <div class="search-wrap">
-    <h3>Search a city</h3>
-    <input (keyup)="searchCountries($event)" class="search" placeholder="Search country" type="text">
-    <div>
-      <ul *ngFor="let country of countryList; let i = index;">
-        <li (click)="countrySelected(i)">{{country}}</li>
-      </ul>
+    <div class="country">
+      <h3>Search a country</h3>
+      <input (keyup)="searchCountries($event)" class="search" placeholder="Search country" type="text">
+      <div class="country-list">
+        <ul *ngFor="let country of countryList; let i = index;">
+          <li (click)="countrySelected(i)">{{country}}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="language">
+      <h3>Search a language to find which countries speak it!</h3>
+      <input (keyup)="searchByLanguage($event)" placeholder="Search by language" type="text">
     </div>
   </div>
   <div class="details">

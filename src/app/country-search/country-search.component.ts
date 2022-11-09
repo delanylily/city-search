@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { map, Subject, Subscription, switchMap } from 'rxjs';
+import { filter, forkJoin, map, mergeMap, Subject, Subscription, switchMap, withLatestFrom } from 'rxjs';
 import { countryInfo } from '../models/country-info';
 import { CountriesService } from '../services/countries.service';
 
@@ -14,7 +14,10 @@ export class CountrySearchComponent implements OnInit, OnDestroy {
   term: any;
   selectedCountry: string;
   inputSubscription: Subscription;
+  languageInputSubscription: Subscription;
   inputChanged: Subject<string> = new Subject<string>();
+  // languageInputChanged: Subject<string> = new Subject<string>();
+  // language: string;
 
   constructor(private countriesService: CountriesService) { }
 
@@ -41,6 +44,10 @@ export class CountrySearchComponent implements OnInit, OnDestroy {
 
   searchCountries(event: any) {
     this.inputChanged.next(event.target.value)
+  }
+
+  searchByLanguage(event: any) {
+    // this.languageInputChanged.next(event.target.value)
   }
 
   ngOnDestroy(): void {
