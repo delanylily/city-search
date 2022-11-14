@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { filter, forkJoin, map, mergeMap, Subject, Subscription, switchMap, withLatestFrom } from 'rxjs';
+import { map, Subject, Subscription, switchMap } from 'rxjs';
 import { countryInfo } from '../models/country-info';
 import { CountriesService } from '../services/countries.service';
 
@@ -14,24 +14,21 @@ export class CountrySearchComponent implements OnInit, OnDestroy {
   term: any;
   selectedCountry: string;
   inputSubscription: Subscription;
-  languageInputSubscription: Subscription;
   inputChanged: Subject<string> = new Subject<string>();
-  // languageInputChanged: Subject<string> = new Subject<string>();
-  // language: string;
 
   constructor(private countriesService: CountriesService) { }
 
   ngOnInit(): void {
     this.inputSubscription = this.inputChanged.pipe(
       map((search: any) => {
-        this.term = search;
+        this.term = search
       }),
       switchMap(() => this.countriesService.getCountryData(this.term))
-    ).subscribe(countries => {
-      countries.map((country: any) => {
-        this.countryList.push(country.name.common)
+    ).subscribe(data => {
+      data.map((countries: any) => {
+        this.countryList.push(countries.name.common);
       })
-    });
+    })
   }
 
   countrySelected(country: any) {
@@ -42,13 +39,10 @@ export class CountrySearchComponent implements OnInit, OnDestroy {
     })
   }
 
-  searchCountries(event: any) {
+  searchCountries(event: any): void {
     this.inputChanged.next(event.target.value)
   }
 
-  searchByLanguage(event: any) {
-    // this.languageInputChanged.next(event.target.value)
-  }
 
   ngOnDestroy(): void {
     this.inputSubscription.unsubscribe();

@@ -9,30 +9,26 @@
         </ul>
       </div>
     </div>
-    <div class="language">
-      <h3>Search a language to find which countries speak it!</h3>
-      <input (keyup)="searchByLanguage($event)" placeholder="Search by language" type="text">
+    <div class="details">
+      <h5>{{countryInfo?.flag}} {{countryInfo?.name}}</h5>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th>Capital</th>
+            <th>Continent</th>
+            <th>Language</th>
+            <th>Independence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{countryInfo?.capital}}</td>
+            <td>{{countryInfo?.continent}}</td>
+            <td>{{countryInfo?.language}}</td>
+            <td>{{countryInfo?.independent}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>
-  <div class="details">
-    <h5>{{countryInfo?.flag}} {{countryInfo?.name}}</h5>
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th>Capital</th>
-          <th>Continent</th>
-          <th>Language</th>
-          <th>Independence</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{countryInfo?.capital}}</td>
-          <td>{{countryInfo?.continent}}</td>
-          <td>{{countryInfo?.language}}</td>
-          <td>{{countryInfo?.independent}}</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </div>
