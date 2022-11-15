@@ -15,18 +15,14 @@ export class CountrySearchComponent implements OnInit, OnDestroy {
   selectedCountry: string;
   inputSubscription: Subscription;
   inputChanged: Subject<string> = new Subject<string>();
-
   constructor(private countriesService: CountriesService) { }
 
   ngOnInit(): void {
     this.inputSubscription = this.inputChanged.pipe(
-      map((search: any) => {
-        this.term = search
-      }),
-      switchMap(() => this.countriesService.getCountryData(this.term))
-    ).subscribe(data => {
-      data.map((countries: any) => {
-        this.countryList.push(countries.name.common);
+      map((value) => this.term = value), switchMap(() => this.countriesService.getCountryData(this.term))
+    ).subscribe((data: any) => {
+      data.map((country: any) => {
+        this.countryList.push(country.name.common)
       })
     })
   }
@@ -39,8 +35,8 @@ export class CountrySearchComponent implements OnInit, OnDestroy {
     })
   }
 
-  searchCountries(event: any): void {
-    this.inputChanged.next(event.target.value)
+  searchCountries(country: any) {
+    this.inputChanged.next(country.target.value);
   }
 
 
