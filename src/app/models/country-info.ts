@@ -11,8 +11,7 @@ export class countryInfo {
     this.capital = value.capital;
     this.continent = value.continents[0];
     this.flag = value.flag;
-    this.language = value.languages[Object.keys(value.languages)[0]]
+    this.language = value.languages[Object.keys(value.languages)[0]];
     this.independent = value.independent;
   }
-
 }

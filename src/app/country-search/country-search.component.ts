@@ -11,36 +11,39 @@ import { CountriesService } from '../services/countries.service';
 export class CountrySearchComponent implements OnInit, OnDestroy {
   countryInfo: countryInfo;
   countryList: Array<any> = [];
-  term: any;
-  selectedCountry: string;
   inputSubscription: Subscription;
+  countrySubscription: Subscription;
   inputChanged: Subject<string> = new Subject<string>();
-  constructor(private countriesService: CountriesService) { }
+
+  constructor(private readonly countriesService: CountriesService) { }
 
   ngOnInit(): void {
     this.inputSubscription = this.inputChanged.pipe(
-      map((value) => this.term = value), switchMap(() => this.countriesService.getCountryData(this.term))
-    ).subscribe((data: any) => {
-      data.map((country: any) => {
-        this.countryList.push(country.name.common)
-      })
-    })
+      switchMap((value) => this.countriesService.getCountryData(value))
+    ).subscribe((data: any[]) => {
+      console.log(data, 'data');
+      this.countryList = data.map((country: any) => country.name.common);
+    });
   }
 
-  countrySelected(country: any) {
-    this.selectedCountry = this.countryList[country];
+  countrySelected(selectedCountryIndex: any) {
+    const selected = this.countryList[selectedCountryIndex];
     this.countryList = [];
-    this.countriesService.getCountryData(this.selectedCountry).subscribe(data => {
+    this.countrySubscription = this.countriesService.getCountryData(selected).subscribe(data => {
       this.countryInfo = new countryInfo(data[0]);
-    })
+    });
   }
 
   searchCountries(country: any) {
     this.inputChanged.next(country.target.value);
   }
 
-
   ngOnDestroy(): void {
-    this.inputSubscription.unsubscribe();
+    if (this.inputSubscription) {
+      this.inputSubscription.unsubscribe();
+    }
+    if (this.countrySubscription) {
+      this.countrySubscription.unsubscribe();
+    }
   }
 }
