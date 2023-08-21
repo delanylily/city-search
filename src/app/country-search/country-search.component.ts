@@ -21,7 +21,6 @@ export class CountrySearchComponent implements OnInit, OnDestroy {
     this.inputSubscription = this.inputChanged.pipe(
       switchMap((value) => this.countriesService.getCountryData(value))
     ).subscribe((data: any[]) => {
-      console.log(data, 'data');
       this.countryList = data.map((country: any) => country.name.common);
     });
   }
